@@ -12,7 +12,7 @@ public class Main {
         SortingAlgorithm[] algorithms = {
             new BubbleSort(),
             //new InsertionSort(),
-            //new QuickSort()
+            new QuickSort()
         };
 
         for (String fileName : fileNames) {
