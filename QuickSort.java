@@ -1,55 +1,54 @@
+import java.util.Random;
+
 public class QuickSort implements SortingAlgorithm {
+
+    private Random random = new Random(); // gerador de números aleatórios para escolher o pivô
 
     @Override
     public String getName() {
-        return "QuickSort";
+        return "QuickSort"; 
     }
 
     @Override
     public void sort(int[] arr) {
         if (arr == null || arr.length == 0) {
-            return;
+            return; 
         }
-        quickSortRecursivo(arr, 0, arr.length - 1);
+        sortSubarray(arr, 0, arr.length - 1); // ordenação recursiva
     }
 
-    /**
-     * O método recursivo principal. Ele ordena a porção do array entre os índices 'low' e 'high'.
-     */
-    private void quickSortRecursivo(int[] arr, int low, int high) {
-        // Condição de parada da recursão: quando a seção tem 1 ou 0 elementos.
-        if (low < high) {
-            // Particiona o array e obtém o índice final do pivô.
+    private void sortSubarray(int[] arr, int low, int high) { //ordena uma parte específica do array
+        if (low < high) { 
+            // escolhe um pivô aleatório --> particiona o array
             int pivotIndex = partition(arr, low, high);
 
-            // Chama recursivamente para as duas metades (sem incluir o pivô).
-            quickSortRecursivo(arr, low, pivotIndex - 1);  // Sub-array à esquerda do pivô
-            quickSortRecursivo(arr, pivotIndex + 1, high); // Sub-array à direita do pivô
+            // chamadas recursivas
+            sortSubarray(arr, low, pivotIndex - 1);
+            sortSubarray(arr, pivotIndex + 1, high);
         }
     }
 
     private int partition(int[] arr, int low, int high) {
-        // Escolhemos o último elemento como pivô (uma estratégia comum).
-        int pivot = arr[high];
-        int i = (low - 1); // "Ponteiro" para a posição do último elemento menor que o pivô.
+        // Escolhe um índice aleatório e move o elemento para a posição high --> se torna o pivô
+        int randomIndex = random.nextInt(high - low + 1) + low;
+        swap(arr, randomIndex, high);
 
-        // Percorre o sub-array para comparar cada elemento com o pivô.
+        int pivot = arr[high];
+        int i = (low - 1);
+
         for (int j = low; j < high; j++) {
             if (arr[j] < pivot) {
                 i++;
-                swap(arr, i, j); // Move o elemento menor para a parte esquerda.
+                swap(arr, i, j);
             }
         }
-
-        // Coloca o pivô em sua posição final correta (logo após o último elemento menor).
-        swap(arr, i + 1, high);
-        return i + 1; // Retorna o índice do pivô.
+        swap(arr, i + 1, high); // coloca o pivô em sua posição final
+        return i + 1; // índice do pivô
     }
 
-    private void swap(int[] arr, int i, int j) {
+    private void swap(int[] arr, int i, int j) { //troca de dois elementos no array
         int temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
     }
-
 }

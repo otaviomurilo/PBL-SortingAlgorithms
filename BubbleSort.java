@@ -4,17 +4,22 @@ public class BubbleSort implements SortingAlgorithm {
     public void sort(int[] arr){
         int n = arr.length;
 
-        for (int i = 0; i < n - 1; i++) { //controla o número de passagens pelo array
-            for (int j = 0; j < n - 1; j++) { //laço interno que percorre o array e faz as trocas
-                if (arr[j] > arr[j + 1]) {
-                    int temp = arr[j]; //armazena o valor temporário
-                    arr[j] = arr [j + 1]; //menor valor vai para frente
-                    arr[j + 1] = temp; //finaliza a troca
+        for (int i = 0; i < n - 1; i++) { //controla o número de passagens necessárias
+            boolean swapped = false; // flag booleano: verifica se houve trocas na passagem
+
+            for (int j = 0; j < n - 1 - i; j++) { // -i --> ignora elementos já ordenados no final do array
+                if (arr[j] > arr[j + 1]) { //troca de elementos adjacentes --> array fora de ordem
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    swapped = true; 
                 }
+            }
+            if (!swapped) { // se nenhuma troca ocorreu nesta passagem, o array está ordenado
+                break;
             }
         }
     }
-
     @Override
     public String getName(){
         return "BubbleSort";
