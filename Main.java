@@ -11,7 +11,7 @@ public class Main {
 
         SortingAlgorithm[] algorithms = {
             new BubbleSort(),
-            //new InsertionSort(),
+            new InsertionSort(),
             new QuickSort()
         };
 
